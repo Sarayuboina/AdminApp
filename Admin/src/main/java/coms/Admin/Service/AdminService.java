@@ -11,8 +11,8 @@ public interface AdminService {
 
 	List<Grades> grades();
 
-	Grades updateGrad(String gradName,String newGrad);
+	Grades updateGrad(String gradName,Integer gradId);
 
-	void deleteGrade(String gradName);
+	void deleteGrade(Integer gradId);
 
 }

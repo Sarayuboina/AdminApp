@@ -36,6 +36,11 @@ public class Grades {
 		super();
 		this.gradName = gradName;
 	}
+	public Grades() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 	
 	
 

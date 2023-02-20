@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +26,10 @@ public class AdminController {
 	
 	@Autowired AdminService adminService;
 	
-	@PostMapping("/addGrade")
-	public ResponseEntity<Grades> addGrad(@RequestBody String gradName){
+	@PostMapping("/addGrades/{userName}")
+	public ResponseEntity<Grades> addGrad(@RequestBody Grades grad){
 		
-		Grades res=adminService.insertGrade(gradName);
+		Grades res=adminService.insertGrade(grad.getGradName());
 		if(res!= null) {
 			return new ResponseEntity<Grades>(res,HttpStatus.OK);
 		}
@@ -36,23 +37,23 @@ public class AdminController {
 		
 	}
 	
-	@GetMapping("/getGrades")
-	public ResponseEntity<List<Grades>> getGrade(){
+	@GetMapping("/getGrades/{userName}")
+	public List<Grades> getGrade() throws Exception{
 		
-		List<Grades> res=new ArrayList<>();
-		res=adminService.grades();
-		if(res!=null) {
-			return new ResponseEntity<List<Grades>>(res,HttpStatus.FOUND);
+		List<Grades> res=adminService.grades();
+		
+		if(res==null) {
+			throw new Exception("Empty!!");
 			
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return res;
 		
 	}
 	
-	@PatchMapping("/editGrad")
-	public ResponseEntity<Grades> editGrade(@RequestBody String gradName,String newGrad){
+	@PatchMapping("/editGrad/{userName}/{gradId}")
+	public ResponseEntity<Grades> editGrade(@RequestBody String gradName,@PathVariable Integer gradId){
 		
-		Grades res=adminService.updateGrad(gradName,newGrad);
+		Grades res=adminService.updateGrad(gradName,gradId);
 		
 		
 		if(res!=null) {
@@ -63,11 +64,11 @@ public class AdminController {
 		
 	}
 	
-	@DeleteMapping("/deleteGrad")
-	public ResponseEntity<?> deleteGrade(@RequestBody String gradName){
+	@DeleteMapping("/deleteGrad/{userName}/{gradId}")
+	public String deleteGrade(@PathVariable Integer gradId){
 		
-		adminService.deleteGrade(gradName);
-		return new ResponseEntity<>(HttpStatus.OK);
+		adminService.deleteGrade(gradId);
+		return "Success";
 		
 		
 		

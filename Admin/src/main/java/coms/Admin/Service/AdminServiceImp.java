@@ -19,7 +19,7 @@ public class AdminServiceImp implements AdminService {
 	public Grades insertGrade(String gradName) {
 		// TODO Auto-generated method stub
 		boolean b=gradDao.existsByGradName(gradName);
-		if(b==true) {
+		if(b==false) {
 		   Grades grad=new Grades(gradName);
 		   return gradDao.save(grad);
 		}
@@ -39,19 +39,20 @@ public class AdminServiceImp implements AdminService {
 		
 		
 		return gradDao.findAll();
+		
 	}
 	@Override
-	public Grades updateGrad(String gradName,String newGrad) {
+	public Grades updateGrad(String gradName,Integer gradId) {
 		// TODO Auto-generated method stub
-		Grades grad=gradDao.findByGradName(gradName);
-		grad.setGradName(newGrad);
+		Grades grad=gradDao.findByGradId(gradId);
+		grad.setGradName(gradName);
 		return gradDao.saveAndFlush(grad);
 	}
 	@Override
-	public void deleteGrade(String gradName) {
+	public void deleteGrade(Integer gradId) {
 		// TODO Auto-generated method stub
 		
-		gradDao.deleteByGradName(gradName);
+		gradDao.deleteById(gradId);
 		
 	}
 }

@@ -10,8 +10,14 @@ public interface GradeDao extends JpaRepository<Grades, Integer> {
 
 	boolean existsByGradName(String gradName);
 
-	Grades findByGradName(String gradName);
+	
 
-	void deleteByGradName(String gradName);
+	
+
+	Grades findByGradId(Integer gradId);
+
+
+
+	void deleteByGradId(Integer gradId);
 
 }
